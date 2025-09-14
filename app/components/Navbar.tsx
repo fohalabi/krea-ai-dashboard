@@ -72,9 +72,89 @@ const Navbar = () => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
     };
 
-    // if (!mounted) {
-    //     return null;
-    // }
+    // Show loading version until mounted
+    if (!mounted) {
+        return (
+            <div className="w-full px-4 py-3 bg-white relative z-50">
+                <div className='flex items-center justify-between max-w-7xl mx-auto'>
+                    {/* Left side - Logo */}
+                    <div className='flex items-center flex-shrink-0'>
+                        <div className="mr-4 rounded">
+                            <Image
+                                src="/krealogo.svg"
+                                alt="Krea Logo"
+                                className='filter brightness-0'
+                                width={24}
+                                height={24}
+                            />
+                        </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                        <div className="w-6 h-6 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full flex-shrink-0"></div>
+                        <span className="text-gray-700 font-medium text-sm max-w-32 truncate">benevolentrimbobat</span>
+                        <ChevronDown className="w-4 h-4 text-gray-600 cursor-pointer hover:text-gray-800 transition-colors duration-200" />
+                    </div>
+
+                    {/* Center Navigation */}
+                    <div className='hidden lg:flex flex-1 justify-center'>
+                        <div className='flex items-center bg-gray-200 rounded-2xl px-3 py-2 space-x-2'>
+                            {menuItems.map((item) => {
+                                const IconComponent = item.icon;
+                                return (
+                                    <Link
+                                        key={item.link}
+                                        href={item.link}
+                                        className={`px-3 py-2 rounded-xl transition-colors duration-200 hover:scale-105 transform ${
+                                            pathname === item.link
+                                            ? 'bg-white shadow-sm'
+                                            : 'hover:bg-gray-300'    
+                                        }`}
+                                        title={item.name}
+                                    >
+                                        <IconComponent className='w-5 h-5 text-gray-700 hover:text-gray-900 transition-colors duration-200' />
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Right side - Desktop Only */}
+                    <div className='hidden lg:flex items-center space-x-3 flex-shrink-0'>
+                        {/* Gallery */}
+                        <Link 
+                            href='/gallery' 
+                            className='flex items-center space-x-2 px-3 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 transition-colors duration-200'
+                        >
+                            <FileImage className='w-4 h-4 text-gray-700'/>
+                            <span className='text-sm text-gray-700'>Gallery</span>
+                        </Link>
+
+                        {/* Support */}
+                        <Link 
+                            href="/support" 
+                            className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 transition-colors duration-200"
+                        >
+                            <Headphones className="w-4 h-4 text-gray-700" />
+                            <span className="text-sm text-gray-700">Support</span>
+                        </Link>
+
+                        {/* Notification */}
+                        <button className="p-2 rounded-xl bg-gray-200 hover:bg-gray-300 transition-colors duration-200">
+                            <Bell className="w-4 h-4 text-gray-700" />
+                        </button>
+
+                        {/* Theme Toggle Placeholder */}
+                        <div className='w-10 h-10 rounded-xl bg-gray-200'></div>
+
+                        {/* Profile avatar */}
+                        <div className="w-6 h-6 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full flex-shrink-0 cursor-pointer hover:scale-110 transform transition-transform duration-200">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const isDark = theme === 'dark';
 
@@ -83,19 +163,20 @@ const Navbar = () => {
             <div className='flex items-center justify-between max-w-7xl mx-auto'>
                 {/* Left side - Logo */}
                 <div className='flex items-center flex-shrink-0'>
-                    <div className={`mr-4 p-1 rounded ${isDark ? 'bg-white' : ''}`}>
+                    <div className={`mr-4 rounded ${isDark ? 'bg-white' : ''}`}>
                         <Image
                             src="/krealogo.svg"
                             alt="Krea Logo"
-                            className='mr-4 filter brightness-0 dark:brightness-0 dark:invert'
+                            className='filter brightness-0 dark:brightness-0 dark:invert'
                             width={24}
                             height={24}
                         />
-                    </div>             
+                    </div>
                 </div>
+                
                 <div className="flex items-center space-x-2">
                     <div className="w-6 h-6 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full flex-shrink-0"></div>
-                    <span className="text-gray-700 dark:text-gray-50 font-medium text-sm max-w-32 truncate">benevolentrimbobat</span>
+                    <span className="text-gray-400 dark:text-gray-50 font-medium text-sm max-w-32 truncate">benevolentrimbobat</span>
                     <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-50 cursor-pointer hover:text-gray-800 dark:hover:text-gray-200 transition-colors duration-200" />
                 </div>    
 

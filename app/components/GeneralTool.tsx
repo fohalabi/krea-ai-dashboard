@@ -77,17 +77,17 @@ const GenerateTools: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Generate</h2>
+        <h2 className="text-2xl font-bold text-gray-400 dark:text-white">Generate</h2>
         <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
           Show all
         </button>
       </div>
-      
+             
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {tools.map((tool) => (
           <div
             key={tool.id}
-            className=" p-4 cursor-pointer"
+            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 cursor-pointer hover:shadow-md transition-shadow"
           >
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center space-x-3">
@@ -95,7 +95,7 @@ const GenerateTools: React.FC = () => {
                   {tool.icon}
                 </div>
                 <div className="flex items-center space-x-2">
-                  <h3 className="font-semibold text-gray-900">{tool.name}</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{tool.name}</h3>
                   {tool.isNew && (
                     <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full font-medium">
                       New
@@ -107,8 +107,8 @@ const GenerateTools: React.FC = () => {
                 Open
               </button>
             </div>
-            
-            <p className="text-sm text-gray-600 leading-relaxed">
+                         
+            <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
               {tool.description}
             </p>
           </div>
