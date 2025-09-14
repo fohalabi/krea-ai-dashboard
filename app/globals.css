@@ -19,8 +19,33 @@
   }
 }
 
+/* Override system preference when dark class is applied */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+/* Override system preference when light class is applied */
+.light {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  /* Ensure smooth transitions between themes */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Apply to html as well to ensure full coverage */
+html {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Make sure all elements inherit the theme colors by default */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }

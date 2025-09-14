@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import {
     Home,
     Image as ImageIcon,
@@ -21,7 +22,8 @@ import {
 } from 'lucide-react';
 
 const Navbar = () => {
-    const [isDark, setIsDark] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const { theme, setTheme } = useTheme();
     const pathname = usePathname();
     
     const menuItems = [
@@ -62,44 +64,34 @@ const Navbar = () => {
         },
     ];
 
-    // Initialize dark mode from localStorage or system preference
     useEffect(() => {
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        const shouldBeDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
-        setIsDark(shouldBeDark);
-        
-        if (shouldBeDark) {
-            document.documentElement.classList.add('dark');
-        }
+        setMounted(true);
     }, []);
 
     const toggleDarkMode = () => {
-        const newDarkMode = !isDark;
-        setIsDark(newDarkMode);
-        
-        if (newDarkMode) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
+        setTheme(theme === 'dark' ? 'light' : 'dark');
     };
 
+    // if (!mounted) {
+    //     return null;
+    // }
+
+    const isDark = theme === 'dark';
+
     return (
-        <div className={`w-full px-4 py-3 ${isDark ? 'bg-gray-900' : 'bg-gray-50'} relative z-50`}>
+        <div className={`w-full px-4 py-3 ${isDark ? 'bg-black' : 'bg-white'} relative z-50`}>
             <div className='flex items-center justify-between max-w-7xl mx-auto'>
                 {/* Left side - Logo */}
                 <div className='flex items-center flex-shrink-0'>
-                    <Image
-                        src="/krealogo.svg"
-                        alt="Krea Logo"
-                        className='mr-4 filter brightness-0 dark:brightness-0 dark:invert'
-                        width={24}
-                        height={24}
-                    />                
+                    <div className={`mr-4 p-1 rounded ${isDark ? 'bg-white' : ''}`}>
+                        <Image
+                            src="/krealogo.svg"
+                            alt="Krea Logo"
+                            className='mr-4 filter brightness-0 dark:brightness-0 dark:invert'
+                            width={24}
+                            height={24}
+                        />
+                    </div>             
                 </div>
                 <div className="flex items-center space-x-2">
                     <div className="w-6 h-6 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full flex-shrink-0"></div>
@@ -132,7 +124,6 @@ const Navbar = () => {
                     </div>
                 </div>
 
-
                 {/* Right side - Desktop Only */}
                 <div className='hidden lg:flex items-center space-x-3 flex-shrink-0'>
                     {/* Gallery */}
@@ -161,35 +152,17 @@ const Navbar = () => {
                    {/* Theme Toggle */}
                     <button
                         onClick={toggleDarkMode}
-                        className='relative inline-flex h-10 w-20 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                        className='w-10 h-10 rounded-xl bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center'
                         title='Toggle Dark Mode'
                         aria-label="Toggle dark mode"
-                        role="switch"
-                        aria-checked={isDark}
                     >
-                        {/* Toggle Circle */}
-                        <span
-                            className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-300 ease-in-out ${
-                                isDark ? 'translate-x-12' : 'translate-x-2'
-                            }`}
-                        >
-                            {/* Active Icon */}
-                            <span className="absolute inset-0 flex items-center justify-center">
-                                {isDark ? (
-                                    <Sun className='w-3 h-3 text-yellow-400'/>
-                                ) : (
-                                    <Moon className='w-3 h-3 text-gray-600'/>
-                                )}
-                            </span>
-                        </span>
-                        
-                        {/* Background Icons */}
-                        <span className="absolute left-2 top-2">
-                            <Moon className='w-3 h-3 text-gray-400'/>
-                        </span>
-                        <span className="absolute right-2 top-2">
-                            <Sun className='w-3 h-3 text-gray-400'/>
-                        </span>
+                        <div className="relative w-5 h-5">
+                            {isDark ? (
+                                <Sun className='w-5 h-5 text-yellow-400 transition-all duration-300' />
+                            ) : (
+                                <Moon className='w-5 h-5 text-gray-600 transition-all duration-300' />
+                            )}
+                        </div>
                     </button>
                     {/* Profile avatar */}
                     <div className="w-6 h-6 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full flex-shrink-0 cursor-pointer hover:scale-110 transform transition-transform duration-200">
