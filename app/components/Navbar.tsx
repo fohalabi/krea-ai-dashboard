@@ -158,20 +158,39 @@ const Navbar = () => {
                         <Bell className="w-4 h-4 text-gray-700 dark:text-gray-50" />
                     </button>
 
-                    {/* Theme Toggle */}
+                   {/* Theme Toggle */}
                     <button
                         onClick={toggleDarkMode}
-                        className='p-2 rounded-xl bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200'
+                        className='relative inline-flex h-10 w-20 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
                         title='Toggle Dark Mode'
                         aria-label="Toggle dark mode"
+                        role="switch"
+                        aria-checked={isDark}
                     >
-                        {isDark ? (
-                            <Sun className='w-4 h-4 text-gray-700 dark:text-gray-300'/>
-                        ) : (
-                            <Moon className='w-4 h-4 text-gray-700 dark:text-gray-300'/>
-                        )}
+                        {/* Toggle Circle */}
+                        <span
+                            className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-300 ease-in-out ${
+                                isDark ? 'translate-x-12' : 'translate-x-2'
+                            }`}
+                        >
+                            {/* Active Icon */}
+                            <span className="absolute inset-0 flex items-center justify-center">
+                                {isDark ? (
+                                    <Sun className='w-3 h-3 text-yellow-400'/>
+                                ) : (
+                                    <Moon className='w-3 h-3 text-gray-600'/>
+                                )}
+                            </span>
+                        </span>
+                        
+                        {/* Background Icons */}
+                        <span className="absolute left-2 top-2">
+                            <Moon className='w-3 h-3 text-gray-400'/>
+                        </span>
+                        <span className="absolute right-2 top-2">
+                            <Sun className='w-3 h-3 text-gray-400'/>
+                        </span>
                     </button>
-
                     {/* Profile avatar */}
                     <div className="w-6 h-6 bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 rounded-full flex-shrink-0 cursor-pointer hover:scale-110 transform transition-transform duration-200">
                     </div>
