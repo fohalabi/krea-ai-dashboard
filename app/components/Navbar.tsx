@@ -18,13 +18,10 @@ import {
     FileImage,
     DraftingCompass,
     ChevronDown,
-    Menu,
-    X,
 } from 'lucide-react';
 
 const Navbar = () => {
     const [isDark, setIsDark] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const pathname = usePathname();
     
     const menuItems = [
